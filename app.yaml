@@ -1,0 +1,13 @@
+application: eternal-ship-92219
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /.*
+  script: additional_learning.app
+
+libraries:
+- name: jinja2
+  version: latest

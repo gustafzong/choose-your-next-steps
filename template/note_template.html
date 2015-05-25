@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Notes from Yuan Zong</title>
+  <link rel = "stylesheet" type = "text/css" href = "note.css">
+  <meta charset = "UTF-8">
+</head>
+<body>
+
+{% for concept in concepts %}
+  <div class = "concept">
+    <div class = "concept-title">
+      <h2>{{ concept[0]|e }}</h2>
+    </div>
+    <div class = "concept-description">
+      {% for paragraph in concept[1] %}
+        <p>{{ paragraph|e }}</p>
+      {% endfor %}
+    </div>
+
+    <div>
+      {% for comment in comments_from_user %}
+        {% if comment.catagory == concept[0] %}
+          <p>{{ comment.message|e }}
+          {% if comment.link %}
+            <br>
+            {{ comment.link }}</p>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </div>
+    
+  </div>
+{% endfor %}
+
+<form method = "post">
+  <b>if you wanna add some extra resources:</b>
+  <br>
+  <label>choose catagory: </label>
+  <select name = "catagory">
+    {% for concept in concepts %}
+      <option value={{'"' + concept[0] + '"'}}
+        {% if concept[0] == belonging %}
+          selected = "selected"
+        {% endif %}>
+        {{ concept[0]|e }}
+      </option>
+    {% endfor %}
+  </select>
+  <br>
+  <label>comment: </label><input name = "message">
+  <br>
+  <label>link(could be empty): </label><input name = "link" 
+  value={{'"'+link+'"'}}>
+  <br>
+  {% if error %}
+    <div style = "color: red">{{ error }}</div>
+  {% endif %}
+
+  <input type = "submit" value = "Submit">
+</form>
+
+</body>
+</html>
